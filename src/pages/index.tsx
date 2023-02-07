@@ -12,6 +12,7 @@ import 'keen-slider/keen-slider.min.css'
 
 import { CartButton, HomeContainer, Product } from '@/styles/pages/home'
 import { Handbag } from 'phosphor-react'
+import { Cart } from '@/components/cart/cart'
 
 interface HomeProps {
   products: {
@@ -35,6 +36,7 @@ export default function Home({ products }: HomeProps) {
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
+      <Cart />
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => (
           <Link
