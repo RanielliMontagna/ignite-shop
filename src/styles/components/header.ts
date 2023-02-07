@@ -26,4 +26,20 @@ export const CartButton = styled('button', {
   color: '$gray300',
 
   cursor: 'pointer',
+
+  position: 'relative',
+  '&::after': {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    width: 20,
+    height: 20,
+    borderRadius: '50%',
+    backgroundColor: '$green500',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '$white',
+    border: '3px solid $gray900',
+  },
 })
