@@ -52,6 +52,11 @@ export const Product = styled('div', {
       fontWeight: 'bold',
       color: '$green300',
     },
+
+    '> div:first-child': {
+      display: 'flex',
+      flexDirection: 'column',
+    },
   },
 
   '&:hover': {
@@ -60,4 +65,22 @@ export const Product = styled('div', {
       opacity: 1,
     },
   },
+})
+
+export const CartButton = styled('button', {
+  border: 'none',
+  borderRadius: 6,
+  padding: 12,
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  width: 48,
+  height: 48,
+
+  backgroundColor: '$green500',
+  color: '$white',
+
+  cursor: 'pointer',
 })
