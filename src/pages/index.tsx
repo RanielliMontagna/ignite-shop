@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next'
 import Stripe from 'stripe'
+import { Handbag } from 'phosphor-react'
 
 import Image from 'next/image'
 import Head from 'next/head'
@@ -11,19 +12,16 @@ import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 
 import { CartButton, HomeContainer, Product } from '@/styles/pages/home'
-import { Handbag } from 'phosphor-react'
-import { Cart } from '@/components/cart/cart'
+import { IProduct, useCart } from '@/context/cardContext'
+import { formatToBrl } from '@/utils/formatToBrl'
 
 interface HomeProps {
-  products: {
-    id: string
-    name: string
-    imageUrl: string
-    price: number
-  }[]
+  products: IProduct[]
 }
 
 export default function Home({ products }: HomeProps) {
+  const { handleAddProduct } = useCart()
+
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 3,
@@ -36,7 +34,6 @@ export default function Home({ products }: HomeProps) {
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
-      <Cart />
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => (
           <Link
@@ -55,10 +52,15 @@ export default function Home({ products }: HomeProps) {
               <footer>
                 <div>
                   <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <span>{formatToBrl(product.price)}</span>
                 </div>
                 <div>
-                  <CartButton>
+                  <CartButton
+                    onClick={(e) => {
+                      handleAddProduct(product)
+                      e.preventDefault()
+                    }}
+                  >
                     <Handbag size={24} weight="bold" />
                   </CartButton>
                 </div>
@@ -83,10 +85,7 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format((price.unit_amount || 0) / 100),
+      price: (price.unit_amount || 0) / 100,
     }
   })
 

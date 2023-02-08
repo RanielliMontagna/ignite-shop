@@ -12,39 +12,22 @@ import {
   ProductContainer,
   ProductDetails,
 } from '../../styles/pages/product'
+import { useCart } from '@/context/cardContext'
+import { formatToBrl } from '@/utils/formatToBrl'
 
 interface ProductProps {
   product: {
     id: string
     name: string
     imageUrl: string
-    price: string
+    price: number
     description: string
     defaultPriceId: string
   }
 }
 
 export default function Product({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
-
-  async function handleBuyButton() {
-    try {
-      setIsCreatingCheckoutSession(true)
-
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      window.location.href = checkoutUrl
-    } catch (err) {
-      setIsCreatingCheckoutSession(false)
-
-      alert('Falha ao redirecionar ao checkout!')
-    }
-  }
+  const { handleAddProduct } = useCart()
 
   return (
     <>
@@ -58,15 +41,21 @@ export default function Product({ product }: ProductProps) {
 
         <ProductDetails>
           <h1>{product.name}</h1>
-          <span>{product.price}</span>
+          <span>{formatToBrl(product.price)}</span>
 
           <p>{product.description}</p>
 
           <button
-            disabled={isCreatingCheckoutSession}
-            onClick={handleBuyButton}
+            onClick={() =>
+              handleAddProduct({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl,
+              })
+            }
           >
-            Comprar agora
+            Adicionar ao carrinho
           </button>
         </ProductDetails>
       </ProductContainer>
@@ -104,10 +93,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        price: new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format((price.unit_amount || 0) / 100),
+        price: (price.unit_amount || 0) / 100,
         description: product.description,
         defaultPriceId: price.id,
       },

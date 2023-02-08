@@ -1,11 +1,16 @@
 import { createContext, useContext, useState } from 'react'
 
-interface Product {}
+export interface IProduct {
+  id: string
+  name: string
+  imageUrl: string
+  price: number
+}
 interface CartContextData {
   openCart: boolean
-  products: Product[]
+  products: IProduct[]
 
-  handleAddProduct: (product: Product) => void
+  handleAddProduct: (product: IProduct) => void
   handleRemoveProduct: (productId: number) => void
 
   handleOpenCart: () => void
@@ -20,7 +25,7 @@ const CartContext = createContext({} as CartContextData)
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [openCart, setOpenCart] = useState(false)
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<IProduct[]>([])
 
   const handleOpenCart = () => {
     setOpenCart(true)
@@ -30,7 +35,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setOpenCart(false)
   }
 
-  const handleAddProduct = (product: Product) => {
+  const handleAddProduct = (product: IProduct) => {
     setProducts((values) => [...values, product])
   }
 
