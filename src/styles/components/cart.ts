@@ -67,3 +67,21 @@ export const CartButton = styled('button', {
     transition: 'background-color 0.2s',
   },
 })
+
+export const CartCloseButton = styled('button', {
+  zIndex: 4,
+  position: 'absolute',
+  top: 16,
+  right: 16,
+  border: 0,
+  background: 'transparent',
+  cursor: 'pointer',
+  color: '$gray300',
+
+  transition: 'color 0.2s',
+
+  '&:hover': {
+    color: '$white',
+    transition: 'color 0.2s',
+  },
+})

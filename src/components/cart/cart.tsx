@@ -1,12 +1,14 @@
 import { useCart } from '@/context/cardContext'
 import {
   CartButton,
+  CartCloseButton,
   CartContainer,
   CartItems,
   CartSummary,
   Overlay,
   Title,
 } from '@/styles/components/cart'
+import { X } from 'phosphor-react'
 
 export function Cart() {
   const { openCart, handleCloseCart } = useCart()
@@ -23,6 +25,9 @@ export function Cart() {
           transition: 'all 0.3s ease-in-out',
         }}
       >
+        <CartCloseButton onClick={handleCloseCart}>
+          <X size={18} weight="bold" />
+        </CartCloseButton>
         <Title>Sacola de compras</Title>
         <CartItems>em construção...</CartItems>
         <div>
