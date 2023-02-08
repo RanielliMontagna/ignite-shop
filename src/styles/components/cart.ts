@@ -29,8 +29,69 @@ export const Title = styled('h2', {
   fontSize: '$md',
 })
 
+export const EmptyProductsContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  flex: 1,
+})
+
 export const CartItems = styled('div', {
   flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 24,
+})
+
+export const CartProduct = styled('div', {
+  display: 'flex',
+  gap: 20,
+
+  '> div.divImage': {
+    background: 'linear-gradient(180deg, #1EA483 0%, #7465D4 100%)',
+    borderRadius: 8,
+  },
+
+  '> div.divInfo': {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+
+    gap: 8,
+  },
+
+  '> div.divInfo > div:first-of-type': {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 4,
+
+    '> p:first-of-type': {
+      fontSize: '$sm',
+      color: '$gray300',
+    },
+
+    '> p:last-of-type': {
+      fontSize: '$sm',
+      fontWeight: 'bold',
+    },
+  },
+
+  '> div.divInfo > div > button.buttonRemove': {
+    border: 0,
+    background: 'transparent',
+    color: '$green500',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    fontSize: '$sm',
+
+    transition: 'color 0.2s',
+
+    '&:hover': {
+      color: '$green300',
+      transition: 'color 0.2s',
+    },
+  },
 })
 
 export const CartSummary = styled('div', {

@@ -11,7 +11,7 @@ interface CartContextData {
   products: IProduct[]
 
   handleAddProduct: (product: IProduct) => void
-  handleRemoveProduct: (productId: number) => void
+  handleRemoveProduct: (productId: string) => void
 
   handleOpenCart: () => void
   handleCloseCart: () => void
@@ -39,7 +39,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setProducts((values) => [...values, product])
   }
 
-  const handleRemoveProduct = (productId: number) => {}
+  const handleRemoveProduct = (productId: string) => {
+    setProducts((values) =>
+      values.filter((product) => product.id !== productId),
+    )
+  }
 
   return (
     <CartContext.Provider

@@ -44,7 +44,7 @@ export default function Home({ products }: HomeProps) {
             <Product className="keen-slider__slide">
               <Image
                 src={product.imageUrl}
-                alt="camiseta1"
+                alt={product.name}
                 width={520}
                 height={480}
               />
