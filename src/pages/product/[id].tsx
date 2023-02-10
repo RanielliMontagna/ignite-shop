@@ -27,7 +27,9 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const { handleAddProduct } = useCart()
+  const { products, handleAddProduct } = useCart()
+
+  const _product = products.find((p) => p.id === product.id)
 
   return (
     <>
@@ -54,8 +56,9 @@ export default function Product({ product }: ProductProps) {
                 imageUrl: product.imageUrl,
               })
             }
+            disabled={!!_product}
           >
-            Adicionar ao carrinho
+            {_product ? 'Produto já adicionado' : 'Adicionar ao carrinho'}
           </button>
         </ProductDetails>
       </ProductContainer>

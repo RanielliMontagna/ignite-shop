@@ -20,7 +20,7 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
-  const { handleAddProduct } = useCart()
+  const cart = useCart()
 
   const [sliderRef] = useKeenSlider({
     slides: {
@@ -35,39 +35,48 @@ export default function Home({ products }: HomeProps) {
         <title>Home | Ignite Shop</title>
       </Head>
       <HomeContainer ref={sliderRef} className="keen-slider">
-        {products.map((product) => (
-          <Link
-            href={`/product/${product.id}`}
-            key={product.id}
-            prefetch={false}
-          >
-            <Product className="keen-slider__slide">
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                width={520}
-                height={480}
-              />
+        {products.map((product) => {
+          const _product = cart.products.find((p) => p.id === product.id)
 
-              <footer>
-                <div>
-                  <strong>{product.name}</strong>
-                  <span>{formatToBrl(product.price)}</span>
-                </div>
-                <div>
-                  <CartButton
-                    onClick={(e) => {
-                      handleAddProduct(product)
-                      e.preventDefault()
-                    }}
-                  >
-                    <Handbag size={24} weight="bold" />
-                  </CartButton>
-                </div>
-              </footer>
-            </Product>
-          </Link>
-        ))}
+          return (
+            <Link
+              href={`/product/${product.id}`}
+              key={product.id}
+              prefetch={false}
+            >
+              <Product className="keen-slider__slide">
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  width={520}
+                  height={480}
+                />
+
+                <footer>
+                  <div>
+                    <strong>{product.name}</strong>
+                    <span>{formatToBrl(product.price)}</span>
+                  </div>
+                  <div>
+                    <CartButton
+                      onClick={(e) => {
+                        cart.handleAddProduct(product)
+                        e.preventDefault()
+                      }}
+                      disabled={!!_product}
+                      style={{
+                        opacity: _product ? 0.5 : 1,
+                        cursor: _product ? 'not-allowed' : 'pointer',
+                      }}
+                    >
+                      <Handbag size={24} weight="bold" />
+                    </CartButton>
+                  </div>
+                </footer>
+              </Product>
+            </Link>
+          )
+        })}
       </HomeContainer>
     </>
   )
