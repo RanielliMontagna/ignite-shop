@@ -6,4 +6,7 @@ export const Container = styled('main', {
   alignItems: 'flex-start',
   justifyContent: 'center',
   minHeight: '100vh',
+
+  overflowX: 'auto',
+  padding: '1rem',
 })

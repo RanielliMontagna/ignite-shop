@@ -42,6 +42,7 @@ export const CartItems = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: 24,
+  overflowY: 'auto',
 })
 
 export const CartProduct = styled('div', {
