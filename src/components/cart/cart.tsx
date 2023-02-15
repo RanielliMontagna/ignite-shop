@@ -17,6 +17,14 @@ import { X } from 'phosphor-react'
 export function Cart() {
   const { products, openCart, handleCloseCart, handleRemoveProduct } = useCart()
 
+  const _quantity = products.reduce((acc, product) => {
+    return acc + 1
+  }, 0)
+
+  const _total = products.reduce((acc, product) => {
+    return acc + product.price
+  }, 0)
+
   return (
     <>
       <Overlay
@@ -75,14 +83,14 @@ export function Cart() {
           <CartSummary>
             <div>
               <p>Quantidade</p>
-              <p>3 itens</p>
+              <p>{_quantity} itens</p>
             </div>
             <div>
               <p>
                 <strong>Valor total</strong>
               </p>
               <p>
-                <strong>R$ 1.000,00</strong>
+                <strong>{formatToBrl(_total)}</strong>
               </p>
             </div>
           </CartSummary>
