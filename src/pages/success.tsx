@@ -20,8 +20,6 @@ interface SuccessProps {
 }
 
 export default function Success({ costumerName, products }: SuccessProps) {
-  console.log(products)
-
   return (
     <>
       <Head>
@@ -66,8 +64,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const session = await stripe.checkout.sessions.retrieve(sessionId, {
     expand: ['line_items', 'line_items.data.price.product'],
   })
-
-  console.log(session)
 
   const costumerName = session.customer_details?.name
 
