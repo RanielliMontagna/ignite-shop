@@ -1,9 +1,7 @@
-import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
 
-import axios from 'axios'
 import Stripe from 'stripe'
 
 import { stripe } from '../../lib/stripe'
@@ -54,6 +52,7 @@ export default function Product({ product }: ProductProps) {
                 name: product.name,
                 price: product.price,
                 imageUrl: product.imageUrl,
+                priceId: product.defaultPriceId,
               })
             }
             disabled={!!_product}

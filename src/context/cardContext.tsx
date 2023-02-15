@@ -5,6 +5,7 @@ export interface IProduct {
   name: string
   imageUrl: string
   price: number
+  priceId: string
 }
 interface CartContextData {
   openCart: boolean

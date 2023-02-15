@@ -1,3 +1,9 @@
+import { useState } from 'react'
+import { X } from 'phosphor-react'
+import axios from 'axios'
+
+import Image from 'next/image'
+
 import { useCart } from '@/context/cardContext'
 import {
   CartButton,
@@ -11,19 +17,38 @@ import {
   Title,
 } from '@/styles/components/cart'
 import { formatToBrl } from '@/utils/formatToBrl'
-import Image from 'next/image'
-import { X } from 'phosphor-react'
 
 export function Cart() {
   const { products, openCart, handleCloseCart, handleRemoveProduct } = useCart()
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false)
 
-  const _quantity = products.reduce((acc, product) => {
+  const _quantity = products.reduce((acc, _) => {
     return acc + 1
   }, 0)
 
   const _total = products.reduce((acc, product) => {
     return acc + product.price
   }, 0)
+
+  const _handleCheckout = async () => {
+    try {
+      setIsCreatingCheckout(true)
+
+      const response = await axios.post('/api/checkout', {
+        line_items: products.map((product) => ({
+          price: product.priceId,
+          quantity: 1,
+        })),
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      setIsCreatingCheckout(false)
+      alert('Falha ao redirecionar ao checkout!')
+    }
+  }
 
   return (
     <>
@@ -95,7 +120,9 @@ export function Cart() {
             </div>
           </CartSummary>
         </div>
-        <CartButton>Finalizar compra</CartButton>
+        <CartButton onClick={_handleCheckout} disabled={isCreatingCheckout}>
+          Finalizar compra
+        </CartButton>
       </CartContainer>
     </>
   )
